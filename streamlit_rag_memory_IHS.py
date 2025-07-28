@@ -60,7 +60,7 @@ from langchain.chains.retrieval import create_retrieval_chain
 @st.cache_resource
 def initialize_components(selected_model):
     # PDF 경로를 수정하세요 (또는 Streamlit에서 업로드 받아도 됨)
-    file_path = r"대한민국헌법(헌법)(제00010호)(19880225).pdf"
+    file_path = r"2024 World Analysis - Propylene - Report.pdf"
     pages = load_and_split_pdf(file_path)
     vectorstore = get_vectorstore(pages)
     retriever = vectorstore.as_retriever()
@@ -82,7 +82,7 @@ just reformulate it if needed and otherwise return it as is."""
     qa_system_prompt = """You are an assistant for question-answering tasks. \
 Use the following pieces of retrieved context to answer the question. \
 If you don't know the answer, just say that you don't know. \
-Keep the answer perfect. please use imogi with the answer.
+Keep the answer perfect. please use emogi with the answer.
 대답은 한국어로 하고, 존댓말을 써줘.\
 
 {context}"""
@@ -101,7 +101,7 @@ Keep the answer perfect. please use imogi with the answer.
     return rag_chain
 
 # Streamlit UI
-st.header("헌법 Q&A 챗봇 💬 📚")
+st.header("Propylene Q&A Chatbot 💬 📚")
 option = st.selectbox("Select GPT Model", ("gpt-4o-mini", "gpt-3.5-turbo-0125"))
 rag_chain = initialize_components(option)
 chat_history = StreamlitChatMessageHistory(key="chat_messages")
@@ -116,7 +116,7 @@ conversational_rag_chain = RunnableWithMessageHistory(
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", 
-                                     "content": "헌법에 대해 무엇이든 물어보세요!"}]
+                                     "content": "Ask anything about the propylene market!"}]
 
 for msg in chat_history.messages:
     st.chat_message(msg.type).write(msg.content)
